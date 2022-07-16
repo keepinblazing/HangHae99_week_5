@@ -36,7 +36,7 @@ const Header = () => {
             }}
             onClick={() => navigate("/")}
           >
-            <FontAwesomeIcon icon={faHouse} />
+            <FontAwesomeIcon icon={faHouse} style = {{ fontSize : "x-large"}}/>
           </button>
           <Spacer />
           <Logo>

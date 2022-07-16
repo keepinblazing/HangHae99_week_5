@@ -4,6 +4,7 @@ import Header from "./Header";
 import Mainpage from "./MainPage";
 import Signup from "./Signup";
 import Login from "./Login";
+import Write from "./Write";
 
 function App() {
   
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Mainpage />} />
           <Route path="/Signup" element={<Signup />} />
           <Route path="/Login" element={<Login />} />
+          <Route path="/Write" element={<Write />} />
         </Routes>
       </div>
     </>
