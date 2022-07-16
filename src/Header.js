@@ -5,27 +5,61 @@ import { shadow, media } from "./styleUtil";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import Button from "@material-ui/core/Button";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "./shared/firebase";
 
-const Header = (props) => {
-  const history = useHistory();
+const Header = () => {
+  const navigate = useNavigate();
+  const [is_login, setIsLogin] = React.useState(false);
+  const loginCheck = async (user) => {
+    if (user) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  };
+
+  React.useEffect(() => {
+    onAuthStateChanged(auth, loginCheck);
+  }, []);
 
   return (
     <Positioner>
       <WhiteBackground>
         <HeaderContents>
-          <button style={{backgroundColor : "transparent",
-          border : "transparent", cursor : "pointer"}}
-          onClick = {() => history.push("/")}>  
-          <FontAwesomeIcon icon={faHouse} />
+          <button
+            style={{
+              backgroundColor: "transparent",
+              border: "transparent",
+              cursor: "pointer",
+            }}
+            onClick={() => navigate("/")}
+          >
+            <FontAwesomeIcon icon={faHouse} />
           </button>
           <Spacer />
-          <Button variant="outlined" onClick={() => history.push("/Signup")}>
-            JOIN
-          </Button>
-          <Button variant="outlined" onClick={() => history.push("/Login")}>
-            LOG-IN
-          </Button>
+
+          {is_login === false ? (
+            <>
+              <Button variant="outlined" onClick={() => navigate("/Signup")}>
+                JOIN
+              </Button>
+              <Button variant="outlined" onClick={() => navigate("/Login")}>
+                LOG-IN
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="outlined"
+              onClick={() => {
+                signOut(auth);
+                navigate("/");
+              }}
+            >
+              LOG-OUT
+            </Button>
+          )}
         </HeaderContents>
       </WhiteBackground>
       <GradientBorder />
