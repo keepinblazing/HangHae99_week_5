@@ -39,6 +39,9 @@ const Header = () => {
             <FontAwesomeIcon icon={faHouse} />
           </button>
           <Spacer />
+          <Logo>
+            VOYAGE MAGARZINE 
+          </Logo>
 
           {is_login === false ? (
             <>
@@ -109,6 +112,8 @@ const Logo = styled.div`
   font-size: 1.4rem;
   letter-spacing: 2px;
   color: ${oc.black[7]};
+  margin-right : 300px;
+  font-size : xx-large;
 `;
 
 // 중간 여백
