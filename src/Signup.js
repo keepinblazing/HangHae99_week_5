@@ -27,31 +27,80 @@ const Signup = () => {
 
   return (
     <Container>
-      NAME <input ref={name_ref} />
+      <h1>SIGN UP</h1>
+      <label style={{ fontSize: "x-large" }}>
+        NAME
+        <input
+          ref={name_ref}
+          name="name"
+          placeholder="Enter your name"
+          style={{
+            width: "20vw",
+            height: "3vh",
+            fontSize: "large",
+            marginBottom: "0.5rem",
+            marginLeft: "0.5rem",
+          }}
+        />
+      </label>
+      <label style={{ fontSize: "x-large" }}>
+        ID
+        <input
+          ref={id_ref}
+          placeholder="Enter your E-mail"
+          style={{
+            width: "20vw",
+            height: "3vh",
+            fontSize: "large",
+            marginBottom: "0.5rem",
+            marginLeft: "0.5rem",
+          }}
+        />
+      </label>
+      <label style={{ fontSize: "x-large" }}>
+        PW
+        <input
+          ref={pw_ref}
+          placeholder="Enter your password"
+          type="password"
+          style={{
+            width: "20vw",
+            height: "3vh",
+            fontSize: "large",
+            marginBottom: "0.5rem",
+            marginLeft: "0.5rem",
+          }}
+        />
+      </label>
       <br />
-      ID <input ref={id_ref} placeholder="Example@example.com" />
-      <br />
-      PW{" "}
-      <input ref={pw_ref} placeholder="Enter your password" type="password" />
-      <br />
-      <Button
-        variant="outlined"
-        onClick={() => {
-          navigate("/");
-          join();
-        }}
-      >
-        JOIN
-      </Button>
+      <Buttons>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            navigate("/");
+            join();
+          }}
+        >
+          JOIN
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          CANCEL
+        </Button>
+      </Buttons>
     </Container>
   );
 };
 
 const Container = styled.div`
   margin: auto;
-  margin-top: 5%;
-  width: 800px;
-  height: 800px;
+  margin-top: 20vh;
+  width: 40vh;
+  height: 50vh;
   border: 1px solid black;
   display: flex;
   flex-direction: column;
@@ -59,4 +108,9 @@ const Container = styled.div`
   justify-content: center;
 `;
 
+const Buttons = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+`;
 export default Signup;

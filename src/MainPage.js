@@ -11,6 +11,10 @@ const Mainpage = () => {
     const navigate = useNavigate();
 
   return (
+    
+
+
+
     <Write onClick={()=> navigate("/Write")}>
       <FontAwesomeIcon
         icon={faPen}
