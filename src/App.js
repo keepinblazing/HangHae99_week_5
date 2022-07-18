@@ -7,8 +7,6 @@ import Login from "./Login";
 import Write from "./Write";
 
 function App() {
-  
-
   return (
     <>
       <Header />

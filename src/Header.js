@@ -38,40 +38,34 @@ const Header = () => {
               backgroundColor: "transparent",
               border: "transparent",
               cursor: "pointer",
-              position : 'fixed',
-              left : `1%`,
+              position: "fixed",
+              left: `1%`,
             }}
             onClick={() => navigate("/")}
           >
-            <FontAwesomeIcon icon={faHouse} style = {{ fontSize : "x-large"}}/>
+            <FontAwesomeIcon icon={faHouse} style={{ fontSize: "x-large" }} />
           </button>
-          <Spacer />
-          {/* <Logo>
-            VOYAGE MAGARZINE 
-          </Logo> */}
 
           {is_login === false ? (
-            <div style = {{position : "fixed", right : "1%"}}>
-              <Button variant="outlined" onClick={() => navigate("/Signup")}
-              >
+            <div style={{ position: "fixed", right: "1%" }}>
+              <Button variant="outlined" onClick={() => navigate("/Signup")}>
                 JOIN
               </Button>
-              <Button variant="outlined" onClick={() => navigate("/Login")}
-             >
+              <Button variant="outlined" onClick={() => navigate("/Login")}>
                 LOG-IN
               </Button>
             </div>
           ) : (
-            <div  style = {{position : "fixed", right : "1%"}}>
-            <Button
-              variant="outlined"
-              onClick={() => {
-                signOut(auth);
-                navigate("/");
-              }}
-            >
-              LOG-OUT
-            </Button>
+            <div style={{ position: "fixed", right: "1%" }}>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  signOut(auth);
+                  navigate("/");
+                }}
+              >
+                LOG-OUT
+              </Button>
             </div>
           )}
         </HeaderContents>
@@ -106,7 +100,7 @@ const HeaderContents = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  
+
   padding-right: 1rem;
   padding-left: 1rem;
   ${media.wide`
@@ -116,20 +110,6 @@ const HeaderContents = styled.div`
   ${media.tablet`
         width: 100%;
     `}
-`;
-
-// 로고
-const Logo = styled.div`
-  font-size: 1.4rem;
-  letter-spacing: 2px;
-  color: ${oc.black[7]};
-  font-size : xx-large;
-  
-`;
-
-// 중간 여백
-const Spacer = styled.div`
-  flex-grow: 1;
 `;
 
 // 하단 그래디언트 테두리

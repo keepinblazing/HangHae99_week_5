@@ -3,10 +3,12 @@ import styled from "styled-components";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { addDoc, collection, getDoc } from "firebase/firestore";
 import { db } from "./shared/firebase";
+import { useDispatch } from "react-redux";
+import { loadImageFB } from "./redux/modules/post";
 
 const Write = () => {
   const storage = getStorage();
-
+  const dispatch = useDispatch();
   const file_link_ref = useRef(null);
   const content_ref = useRef(null);
 
@@ -19,25 +21,23 @@ const Write = () => {
     file_link_ref.current = { url: file_url };
     
     const add_Post = await addDoc(collection(db, "posts"), {
-      image_url: file_link_ref.current.url,
-      
+      image_url: file_link_ref.current.url,   
     });
   };
 
-    // const fileBtn = (e) => {
-    //   file_link_ref.current.click();
-    // };
+
+
+
   return (
     <Container>
+      <h1 style={{position : "fixed" , top : "10vh"}}>게시글 작성하기</h1>
       <input
         type="file"
         onChange={uploadFB}
         style={{ position: "fixed", top: "25vh"}}
         
       />
-      <img src = {file_link_ref}></img>
-      {/* <button style={{ position: "fixed", top: "25vh"}}
-      onClick={()=> {fileBtn();}}>image upload</button> */}
+
       <div
         style={{
           display: "flex",

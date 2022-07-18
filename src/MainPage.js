@@ -6,16 +6,11 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 import { useNavigate } from "react-router-dom";
 
-
 const Mainpage = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
-    
-
-
-
-    <Write onClick={()=> navigate("/Write")}>
+    <Write onClick={() => navigate("/Write")}>
       <FontAwesomeIcon
         icon={faPen}
         style={{ color: "white", fontSize: "large" }}
