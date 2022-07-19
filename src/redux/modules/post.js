@@ -9,44 +9,43 @@ import {
 } from "firebase/firestore";
 
 //Acitons
-const CREATE = "post/CREATE";
-const LOAD = "post/LOAD";
-const UPDATE = "post/UPDATE";
-const DELETE = "post/DELETE";
+const CREATE = "post/CREATE"; //생성
+const ADD = "post/ADD"; //추가
+const UPDATE = "post/UPDATE"; //수정
+const DELETE = "post/DELETE"; //삭제
+const LOAD = "post/LOAD"; // 불러오기
 
 const initialState = {
   list: [],
 };
 
-//Action Creators
+//Action creator
+
 export function createPost(post) {
-  return { type: CREATE, post };
+  return {type : CREATE , post}
 }
 export function loadPost(post_list) {
-  return { type: LOAD, post_list };
+  return {type : LOAD , post_list}
 }
-export function loadImage(image_url) {
-  return { type: LOAD, image_url };
+export function deletePost(post) {
+  return {type : DELETE , post}
 }
 export function updatePost(post_index) {
-  return { type: UPDATE, post_index };
+  return {type : UPDATE , post_index}
 }
-export function deletePost(post_index) {
-  return { type: DELETE, post_index };
-}
+
 
 //middleware
 
 export const loadPostFB = () => {
   return async function (dispatch) {
     const post_data = await getDocs(collection(db, "posts"));
-
     let post_list = [];
 
     post_data.forEach((d) => {
+
       post_list.push({ id: d.id, ...d.data() });
     });
-
     dispatch(loadPost(post_list));
   };
 };
@@ -81,7 +80,7 @@ export default function reducer(state = initialState, action = {}) {
       return { ...state, list: new_post_list };
     }
     case "post/LOAD": {
-      return { list: "" };
+      return { list : action.post_list };
     }
     case "post/UPDATE": {
       const new_post_list = state.list.map((l, idx) => {
