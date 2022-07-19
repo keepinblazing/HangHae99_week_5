@@ -14,8 +14,6 @@ const Mainpage = () => {
   const post_list = useSelector((state) => state.post.list);
   const dispatch = useDispatch();
 
-  console.log(post_list);
-
   useEffect(() => {
     dispatch(loadPostFB());
   }, []);
@@ -31,11 +29,11 @@ const Mainpage = () => {
                 navigate("/detail/" + index);
               }}
             >
-              <div>{list.content}</div>
               <img
                 src={list.image_url}
-                style={{ width: "50px", height: "50px", objectFit: "cover" }}
+                style={{ width: "25vw", height: "25vh", objectFit: "cover" }}
               ></img>
+              <div>{list.content}</div>
             </Feed>
           );
         })}
@@ -60,12 +58,14 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 const Feed = styled.div`
   margin-top: 8vh;
   width: 55vw;
-  height: 20vh;
+  height: 50vh;
   border: 1px solid black;
   display: flex;
   flex-direction: column;

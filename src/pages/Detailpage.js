@@ -3,34 +3,49 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-
+import Button from "@material-ui/core/Button";
+import { deletePostFB } from "../redux/modules/post";
 
 const DetailPage = () => {
-    const index = useParams();
-    const params = useParams();
-    const post_index = params.index;
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const post_list = useSelector((state) => state.post.list)
+  const index = useParams();
+  const params = useParams();
+  const post_index = params.index;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const post_list = useSelector((state) => state.post.list);
 
-    console.log(post_list)
-    return (
-        <>
-        <Container>
-            {post_list[post_index].content}
-            <img src = {post_list[post_index].image_url}></img>
+  console.log(post_list);
+  return (
+    <>
+      <Container>
+        <img src={post_list[post_index].image_url}></img>
 
+        {post_list[post_index].content}
 
-
-    
-
-        </Container>
-
-        </>
-
-    )
-
-}
+        <Buttons>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              navigate("/");
+              dispatch(deletePostFB(post_list[post_index].id));
+            }}
+            style={{ marginTop: "1%" }}
+          >
+            DELETE
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            MODIFY
+          </Button>
+        </Buttons>
+      </Container>
+    </>
+  );
+};
 
 const Container = styled.div`
   margin: auto;
@@ -44,8 +59,10 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-
-
-
+const Buttons = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+`;
 
 export default DetailPage;

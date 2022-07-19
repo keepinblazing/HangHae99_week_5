@@ -6,11 +6,11 @@ import {
   addDoc,
   doc,
   updateDoc,
+  deleteDoc
 } from "firebase/firestore";
 
 //Acitons
 const CREATE = "post/CREATE"; //생성
-const ADD = "post/ADD"; //추가
 const UPDATE = "post/UPDATE"; //수정
 const DELETE = "post/DELETE"; //삭제
 const LOAD = "post/LOAD"; // 불러오기
@@ -27,8 +27,8 @@ export function createPost(post) {
 export function loadPost(post_list) {
   return {type : LOAD , post_list}
 }
-export function deletePost(post) {
-  return {type : DELETE , post}
+export function deletePost(post_index) {
+  return {type : DELETE , post_index}
 }
 export function updatePost(post_index) {
   return {type : UPDATE , post_index}
@@ -36,7 +36,6 @@ export function updatePost(post_index) {
 
 
 //middleware
-
 export const loadPostFB = () => {
   return async function (dispatch) {
     const post_data = await getDocs(collection(db, "posts"));
@@ -71,6 +70,20 @@ export const updatePostFB = (post_id) => {
   };
 };
 
+export const deletePostFB = (post_id) => {
+  return async function (dispatch, getState) {
+    
+    const docRef = doc(db, "posts", post_id);
+    await deleteDoc(docRef);
+
+    const _post_list = getState().post.list;
+    const post_index = _post_list.findIndex((b) => {
+      return b.id === post_id;
+    });
+    dispatch(deletePost(post_index));
+  };
+};
+
 //reducer
 
 export default function reducer(state = initialState, action = {}) {
@@ -92,6 +105,14 @@ export default function reducer(state = initialState, action = {}) {
       });
       return { ...state, list: new_post_list };
     }
+    case "post/DELETE": {
+      const new_post_list = state.list.filter((l, idx) => {
+        return parseInt(action.post_index) !== idx;
+      });
+
+      return { ...state, list: new_post_list };
+    }
+
     case "post/LOADED": {
       return { ...state, is_loaded: action.loaded };
     }
