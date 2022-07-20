@@ -35,8 +35,8 @@ const Login = () => {
             marginBottom: "0.5rem",
             marginLeft: "0.5rem",
           }}
-          onChange={(e)=> {
-            setId(e.target.value)
+          onChange={(e) => {
+            setId(e.target.value);
           }}
         />
       </label>
@@ -53,33 +53,35 @@ const Login = () => {
             marginBottom: "0.5rem",
             marginLeft: "0.5rem",
           }}
-          onChange={(e)=> {
-            setPw(e.target.value)
+          onChange={(e) => {
+            setPw(e.target.value);
           }}
         />
       </label>
       <br />
-      
+
       <Buttons>
         {id === "" || pw === "" ? (
           <Button
-          variant="outlined"
-          disabled = "disabled"
-          style={{ marginTop: "1%" }}
-        >
-          LOG-IN
-        </Button>
-        ) : (<Button
-          variant="outlined"
-          onClick={() => {
-            navigate("/");
-            LoginFB();
-          }}
-          style={{ marginTop: "1%" }}
-        >
-          LOG-IN
-        </Button>)}
-        
+            variant="outlined"
+            disabled="disabled"
+            style={{ marginTop: "1%" }}
+          >
+            LOG-IN
+          </Button>
+        ) : (
+          <Button
+            variant="outlined"
+            onClick={() => {
+              navigate("/");
+              LoginFB();
+            }}
+            style={{ marginTop: "1%" }}
+          >
+            LOG-IN
+          </Button>
+        )}
+
         <Button
           variant="outlined"
           onClick={() => {

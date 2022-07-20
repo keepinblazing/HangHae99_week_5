@@ -22,7 +22,7 @@ const DetailPage = () => {
           style={{ width: "50vw", height: "50vh" }}
         />
         {post_list[post_index].content}
-
+        {post_list[post_index].time}
         <Buttons>
           <Button
             variant="outlined"
@@ -37,7 +37,7 @@ const DetailPage = () => {
           <Button
             variant="outlined"
             onClick={() => {
-              navigate("/");
+              navigate("/detail/:index/Modify");
             }}
           >
             MODIFY

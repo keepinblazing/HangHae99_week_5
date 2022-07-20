@@ -34,6 +34,7 @@ const Mainpage = () => {
                 style={{ width: "25vw", height: "25vh", objectFit: "cover" }}
               ></img>
               <div>{list.content}</div>
+              <div>{list.time}</div>
             </Feed>
           );
         })}
