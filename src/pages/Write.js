@@ -1,14 +1,18 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { addPostFB } from "../redux/modules/post";
+import { addPostFB} from "../redux/modules/post";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Write = () => {
+
   const storage = getStorage();
   const file_link_ref = useRef(null);
   const content_ref = useRef(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const uploadFB = async (e) => {
     const uploaded_file = await uploadBytes(
       ref(storage, `images/${e.target.files[0].name}`),
@@ -16,37 +20,18 @@ const Write = () => {
     );
     const file_url = await getDownloadURL(uploaded_file.ref);
     file_link_ref.current = { url: file_url };
-
-    dispatch(addPostFB({
-      content : content_ref.current.value,
-      image_url: file_link_ref.current.url}))
-    
+   
   };
-
-  // const addPostList = async (e) => {
-  //   const uploaded_file = await uploadBytes(
-  //     ref(storage, `images/${e.target.files[0].name}`),
-  //     e.target.files[0]
-  //   );
-  //   const file_url = await getDownloadURL(uploaded_file.ref);
-  //   file_link_ref.current = { url: file_url };
-    
-  //   dispatch(
-  //     addPostFB({
-  //         content : content_ref.current.value ,
-  //         image_url : file_link_ref.current.url
-  //     })
-  //   );
-  // };
-
-
+ 
   return (
     <Container>
       <h1 style={{ position: "fixed", top: "10vh" }}>게시글 작성하기</h1>
+   
       <input
         type="file"
         onChange={uploadFB}
         style={{ position: "fixed", top: "25vh" }}
+        
       />
 
       <div
@@ -95,8 +80,9 @@ const Write = () => {
             height: "30vh",
             position: "fixed",
             top: "50vh",
-          }}
+          }} 
         ></input>
+        </div>
         <button
           style={{
             width: "10vw",
@@ -105,11 +91,15 @@ const Write = () => {
             position: "fixed",
             top: "80vh",
           }}
-          onClick={uploadFB}
+          type = "submit"
+          onClick={()=> {navigate("/");
+          dispatch(addPostFB({
+            content : content_ref.current.value,
+            image_url: file_link_ref.current.url}))}}
         >
-          게시글 작성하기
+        작성하기
         </button>
-      </div>
+
     </Container>
   );
 };

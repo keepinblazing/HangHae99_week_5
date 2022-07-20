@@ -18,6 +18,7 @@ function App() {
           <Route path="/Login" element={<Login />} />
           <Route path="/Write" element={<Write />} />
           <Route path="/Detail/:index" element={<Detailpage/>}/>
+          <Route path="/Detail/:index" element={<Detailpage/>}/>
         </Routes>
       </div>
     </>

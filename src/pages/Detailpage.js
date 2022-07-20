@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
-import { deletePostFB } from "../redux/modules/post";
+import { deletePostFB, updatePostFB } from "../redux/modules/post";
 
 const DetailPage = () => {
   const index = useParams();
@@ -14,11 +14,10 @@ const DetailPage = () => {
   const navigate = useNavigate();
   const post_list = useSelector((state) => state.post.list);
 
-  console.log(post_list);
   return (
     <>
       <Container>
-        <img src={post_list[post_index].image_url}></img>
+        <img src={post_list[post_index].image_url} style = {{width : "50vw", height : "50vh"}}></img>
 
         {post_list[post_index].content}
 

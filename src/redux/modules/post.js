@@ -6,8 +6,9 @@ import {
   addDoc,
   doc,
   updateDoc,
-  deleteDoc
+  deleteDoc,
 } from "firebase/firestore";
+import { faFileWord } from "@fortawesome/free-solid-svg-icons";
 
 //Acitons
 const CREATE = "post/CREATE"; //생성
@@ -22,18 +23,17 @@ const initialState = {
 //Action creator
 
 export function createPost(post) {
-  return {type : CREATE , post}
+  return { type: CREATE, post };
 }
 export function loadPost(post_list) {
-  return {type : LOAD , post_list}
+  return { type: LOAD, post_list };
 }
 export function deletePost(post_index) {
-  return {type : DELETE , post_index}
+  return { type: DELETE, post_index };
 }
 export function updatePost(post_index) {
-  return {type : UPDATE , post_index}
+  return { type: UPDATE, post_index };
 }
-
 
 //middleware
 export const loadPostFB = () => {
@@ -42,7 +42,6 @@ export const loadPostFB = () => {
     let post_list = [];
 
     post_data.forEach((d) => {
-
       post_list.push({ id: d.id, ...d.data() });
     });
     dispatch(loadPost(post_list));
@@ -58,21 +57,16 @@ export const addPostFB = (post) => {
   };
 };
 
-export const updatePostFB = (post_id) => {
-  return async function (dispatch, getState) {
-    const docRef = doc(db, "posts", post_id);
-    await updateDoc(docRef, { completed: true });
-    const _post_list = getState().post_list;
-    const post_index = _post_list.findIndex((d) => {
-      return d.id === post_id;
-    });
-    dispatch(updatePost(post_index));
+export const updatePostFB = (post, id) => {
+  return async function (dispatch) {
+    db.doc(post.id).update(post);
+    const new_post = { ...post, id };
+    dispatch(updatePost(new_post));
   };
 };
 
 export const deletePostFB = (post_id) => {
   return async function (dispatch, getState) {
-    
     const docRef = doc(db, "posts", post_id);
     await deleteDoc(docRef);
 
@@ -93,18 +87,13 @@ export default function reducer(state = initialState, action = {}) {
       return { ...state, list: new_post_list };
     }
     case "post/LOAD": {
-      return { list : action.post_list };
+      return { list: action.post_list };
     }
-    case "post/UPDATE": {
-      const new_post_list = state.list.map((l, idx) => {
-        if (parseInt(action.post_index) === idx) {
-          return { ...l, completed: true };
-        } else {
-          return l;
-        }
-      });
+    case "post/UPDATE":
+      const new_post_list = state.list.map((post) =>
+        post.id === action.post.id ? { ...post, ...action.word } : post
+      );
       return { ...state, list: new_post_list };
-    }
     case "post/DELETE": {
       const new_post_list = state.list.filter((l, idx) => {
         return parseInt(action.post_index) !== idx;
