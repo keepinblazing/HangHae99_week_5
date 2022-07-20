@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,9 @@ const Login = () => {
     );
   };
 
+  const [id, setId] = useState();
+  const [pw, setPw] = useState();
+
   return (
     <Container>
       <h1>LOG-IN</h1>
@@ -31,6 +34,9 @@ const Login = () => {
             fontSize: "large",
             marginBottom: "0.5rem",
             marginLeft: "0.5rem",
+          }}
+          onChange={(e)=> {
+            setId(e.target.value)
           }}
         />
       </label>
@@ -47,11 +53,23 @@ const Login = () => {
             marginBottom: "0.5rem",
             marginLeft: "0.5rem",
           }}
+          onChange={(e)=> {
+            setPw(e.target.value)
+          }}
         />
       </label>
       <br />
+      
       <Buttons>
-        <Button
+        {id === "" || pw === "" ? (
+          <Button
+          variant="outlined"
+          disabled = "disabled"
+          style={{ marginTop: "1%" }}
+        >
+          LOG-IN
+        </Button>
+        ) : (<Button
           variant="outlined"
           onClick={() => {
             navigate("/");
@@ -60,7 +78,8 @@ const Login = () => {
           style={{ marginTop: "1%" }}
         >
           LOG-IN
-        </Button>
+        </Button>)}
+        
         <Button
           variant="outlined"
           onClick={() => {

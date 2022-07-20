@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef , useState} from "react";
 import { auth } from "../shared/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
@@ -12,7 +12,45 @@ const Signup = () => {
   const id_ref = useRef(null);
   const pw_ref = useRef(null);
   const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [id, setId] = useState("");
+  const [pw, setPw] = useState("");
+  const [pw_check, setPwCheck] = useState("");
+
+
   const join = async () => {
+    const emailCheck = (email) => {
+      const _reg =
+        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+  
+      return _reg.test(email);
+    };
+    const passwordCheck = (pwd) => {
+      const regPass = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
+  
+      return regPass.test(pwd);
+    };
+
+    if ( id === "" || pw === "" || name === "" ) {
+      alert('Plz enter your Name, ID, PW')
+      return;
+    }
+
+    else if(!emailCheck(id)) {
+      alert("Plz enter a valid email format.")
+      return;
+    }
+
+    else if(!passwordCheck(pw)) {
+      alert("Plz enter a combination of 8 or more letters and numbers and no more than 20 characters.")
+      return;
+    }
+
+    else if ( pw.length < 8 ) {
+      alert('Passwords is too short.')
+      return;
+    }
+
     const user = await createUserWithEmailAndPassword(
       auth,
       id_ref.current.value,
@@ -22,6 +60,7 @@ const Signup = () => {
       user_id: id_ref.current.value,
       name: name_ref.current.value,
     });
+    navigate("/")
   };
 
   return (
@@ -39,7 +78,10 @@ const Signup = () => {
             fontSize: "large",
             marginBottom: "0.5rem",
             marginLeft: "0.5rem",
+            
           }}
+          onChange={(e) => {
+            setName(e.target.value);}}
         />
       </label>
       <label style={{ fontSize: "x-large" }}>
@@ -55,6 +97,8 @@ const Signup = () => {
             marginBottom: "0.5rem",
             marginLeft: "0.5rem",
           }}
+          onChange={(e) => {
+            setId(e.target.value);}}
         />
       </label>
       <label style={{ fontSize: "x-large" }}>
@@ -71,6 +115,8 @@ const Signup = () => {
             marginBottom: "0.5rem",
             marginLeft: "0.5rem",
           }}
+          onChange={(e) => {
+            setPw(e.target.value);}}
         />
       </label>
       <br />
@@ -78,7 +124,6 @@ const Signup = () => {
         <Button
           variant="outlined"
           onClick={() => {
-            navigate("/");
             join();
           }}
         >

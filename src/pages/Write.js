@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { addPostFB} from "../redux/modules/post";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Checkbox } from "@material-ui/core";
 
 const Write = () => {
 
@@ -22,7 +23,9 @@ const Write = () => {
     file_link_ref.current = { url: file_url };
    
   };
- 
+
+  
+
   return (
     <Container>
       <h1 style={{ position: "fixed", top: "10vh" }}>게시글 작성하기</h1>
@@ -30,11 +33,12 @@ const Write = () => {
       <input
         type="file"
         onChange={uploadFB}
-        style={{ position: "fixed", top: "25vh" }}
+        style={{ position: "fixed", top: "20vh" }}
         
       />
 
-      <div
+      <h2 style={{ position: "fixed", top: "25vh" }}>이미지 위치</h2>
+           <div
         style={{
           display: "flex",
           flexDirection: "row",
@@ -43,7 +47,8 @@ const Write = () => {
           marginBottom: "5%",
           position: "fixed",
           top: "30vh",
-        }}
+          textAlign : "center",
+          }}
       >
         <div
           style={{
@@ -51,8 +56,9 @@ const Write = () => {
             height: "10vh",
             border: "1px solid black",
             marginRight: "5%",
+            
           }}
-        ></div>
+        ><Checkbox color="default"/>왼쪽</div>
         <div
           style={{
             width: "11vw",
@@ -60,10 +66,10 @@ const Write = () => {
             border: "1px solid black",
             marginRight: "5%",
           }}
-        ></div>
+        ><Checkbox color="default" />오른쪽</div>
         <div
           style={{ width: "11vw", height: "10vh", border: "1px solid black" }}
-        ></div>
+        ><Checkbox color="default" />아래</div>
       </div>
       <div
         style={{
