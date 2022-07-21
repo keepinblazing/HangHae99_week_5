@@ -8,7 +8,6 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import { faFileWord } from "@fortawesome/free-solid-svg-icons";
 
 //Acitons
 const CREATE = "post/CREATE"; //생성

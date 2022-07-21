@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Write from "./pages/Write";
 import Detailpage from "./pages/Detailpage";
 
+
 function App() {
   return (
     <>
@@ -18,7 +19,7 @@ function App() {
           <Route path="/Login" element={<Login />} />
           <Route path="/Write" element={<Write />} />
           <Route path="/Detail/:index" element={<Detailpage/>}/>
-          <Route path="/Write/:index" element={<Write/>}/>
+          {/* <Route path="/Detail/:index/modify" element={<Modify/>}/> */}
         </Routes>
       </div>
     </>

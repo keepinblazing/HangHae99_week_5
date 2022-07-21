@@ -17,8 +17,8 @@ const Login = () => {
     );
   };
 
-  const [id, setId] = useState();
-  const [pw, setPw] = useState();
+  const [id, setId] = useState("");
+  const [pw, setPw] = useState("");
 
   return (
     <Container>

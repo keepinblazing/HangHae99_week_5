@@ -1,12 +1,12 @@
-import React, { useRef, useState } from "react";
+/* eslint-disable jsx-a11y/alt-text */
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { addPostFB } from "../redux/modules/post";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Checkbox } from "@material-ui/core";
-import { onAuthStateChanged} from "firebase/auth";
-import { auth } from "../shared/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const Write = () => {
   const storage = getStorage();
@@ -14,36 +14,56 @@ const Write = () => {
   const content_ref = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [is_login, setIsLogin] = React.useState(false);
-  const loginCheck = async (user) => {
-    if (user) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-  };
-
-  React.useEffect(() => {
-    onAuthStateChanged(auth, loginCheck);
-  }, []);
 
   const uploadFB = async (e) => {
+    console.log(e.target.files[0]);
+
     const uploaded_file = await uploadBytes(
       ref(storage, `images/${e.target.files[0].name}`),
       e.target.files[0]
     );
+
     const file_url = await getDownloadURL(uploaded_file.ref);
     file_link_ref.current = { url: file_url };
+
+    console.log(file_url);
   };
+
+  const uploadPost = () => {
+    dispatch(
+      addPostFB({
+        content: content_ref.current.value,
+        image_url: file_link_ref.current.url,
+        time: new Date(+new Date() + 3240 * 10000)
+          .toISOString()
+          .replace("T", " ")
+          .replace(/\..*/, ""),
+      })
+    );
+    navigate("/");
+  };
+
+  // const auth = getAuth();
+  // onAuthStateChanged(auth, (user) => {
+  //   if (user) {
+      
+  //     const uid = user.uid;
+  //     console.log(uid)
+  //   } else {
+     
+  //   }
+  // });
+ 
+  
+
 
   return (
     <Container>
       <h1 style={{ position: "fixed", top: "10vh" }}>게시글 작성하기</h1>
-
       <input
         type="file"
-        onChange={uploadFB}
         style={{ position: "fixed", top: "20vh" }}
+        onChange={uploadFB}
       />
 
       <h2 style={{ position: "fixed", top: "25vh" }}>이미지 위치</h2>
@@ -105,9 +125,8 @@ const Write = () => {
             top: "50vh",
           }}
         ></input>
-        
       </div>
-      <button
+     <button
         style={{
           width: "10vw",
           height: "5vh",
@@ -115,20 +134,11 @@ const Write = () => {
           position: "fixed",
           top: "80vh",
         }}
-        type="submit"
-        onClick={() => {
-          navigate("/");
-          dispatch(
-            addPostFB({
-              content: content_ref.current.value,
-              image_url: file_link_ref.current.url,
-              time : new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '')
-            })
-          );
-        }}
+        onClick={uploadPost}
       >
         작성하기
       </button>
+      
     </Container>
   );
 };

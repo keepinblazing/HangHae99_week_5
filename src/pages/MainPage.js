@@ -64,7 +64,7 @@ const Container = styled.div`
 `;
 
 const Feed = styled.div`
-  margin-top: 8vh;
+  margin-top: 1vh;
   width: 55vw;
   height: 50vh;
   border: 1px solid black;
