@@ -6,7 +6,8 @@ import { addPostFB } from "../redux/modules/post";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Checkbox } from "@material-ui/core";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../shared/firebase";
 
 const Write = () => {
   const storage = getStorage();
@@ -14,6 +15,7 @@ const Write = () => {
   const content_ref = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [userName, setUserName] = React.useState("");
 
   const uploadFB = async (e) => {
     console.log(e.target.files[0]);
@@ -43,18 +45,19 @@ const Write = () => {
     navigate("/");
   };
 
-  // const auth = getAuth();
-  // onAuthStateChanged(auth, (user) => {
-  //   if (user) {
-      
-  //     const uid = user.uid;
-  //     console.log(uid)
-  //   } else {
-     
-  //   }
-  // });
- 
   
+  // const nameCheck = async () => {
+  //   await onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       setUserName(user.displayName);
+        
+  //     } else {
+  //       setUserName("");
+  //     }
+  //   });
+  // };
+
+  // console.log(nameCheck)
 
 
   return (
@@ -126,7 +129,7 @@ const Write = () => {
           }}
         ></input>
       </div>
-     <button
+      <button
         style={{
           width: "10vw",
           height: "5vh",
@@ -138,7 +141,6 @@ const Write = () => {
       >
         작성하기
       </button>
-      
     </Container>
   );
 };

@@ -20,10 +20,12 @@ const Header = () => {
   const loginCheck = async (user) => {
     if (user) {
       setIsLogin(true);
+   
     } else {
       setIsLogin(false);
     }
   };
+
 
   React.useEffect(() => {
     onAuthStateChanged(auth, loginCheck);
@@ -85,7 +87,6 @@ const Positioner = styled.div`
   ${shadow(1)}
 `;
 
-// 흰 배경, 내용 중간 정렬
 const WhiteBackground = styled.div`
   background: white;
   display: flex;
@@ -93,7 +94,6 @@ const WhiteBackground = styled.div`
   height: auto;
 `;
 
-// 해더의 내용
 const HeaderContents = styled.div`
   width: 1200px;
   height: 55px;
@@ -112,7 +112,6 @@ const HeaderContents = styled.div`
     `}
 `;
 
-// 하단 그래디언트 테두리
 const GradientBorder = styled.div`
   height: 3px;
   background: linear-gradient(to right, ${oc.black[6]}, ${oc.white[5]});

@@ -52,6 +52,7 @@ const Mainpage = () => {
 const Container = styled.div`
   margin: auto;
   margin-top: 8vh;
+  padding : 5vh;
   width: 60vw;
   height: 90vh;
   border: 1px solid black;
